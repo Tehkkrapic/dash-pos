@@ -8,7 +8,19 @@ Proof of concept for using ibeacon technology and proximity to choose a drink an
 ## Installation
 To test the scanner run the install_libraries.sh script. It should install everything needed to test the scanner. Depending on the strength of the signal of your beacon and the Tx value that you choose the scanner might behave differently. Adjust the distance at which the sale is triggered accordingly.
 
+## Testing the system
+Run these programs in this order:
+	1. sudo python3 bashloop.py
+	2. python3 threadedgui.py
+	3. python3 sender.py
+	4. sudo python3 tmp_vend.py
+
+The program starts to scan for nearby ibeacons. The tmp_vend.py process prints out the arriving packages and all the info related to them. The most important one to pay attention to is distance. Distance is the variable that when compared to a certain number triggers the sale. It depends heavily on the hardware, signal strength and beacon options chosen and should be adjusted accordingly.
+
+Once the transaction starts it's success is simulated by typing in 'PAID' in the sender.py console.
+
 ----------------------------------------------------------------------------------------------------------------------------------------
+
 
 # Dash point of sale embedded system
 Point of sale embedded system based on Dash cryptocurrency. The whole project was done on a Raspberry Pi 3 model B+ with the original 7" touch screen running Raspbian Stretch OS. Based on moocowmoo's [dashvend](https://github.com/moocowmoo/dashvend) project
