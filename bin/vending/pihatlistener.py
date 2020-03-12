@@ -50,9 +50,13 @@ class PiHatListener(threading.Thread):
         # Croatian Kuna - 191
         self.ser.write(b'C,SETCONF,mdb-currency-code=0x1191\n')
         self.ser.write(b'C,1\n')
-
+        
     def unsubscribeToVMC(self):
         self.ser.write(b'C,0\n')
+
+    #Ibeacon-used to choose the drink the scanner passes, needs to be implemented
+    #def selectBeverage(self, ids = 'def'):
+    #    self.s.sendall(str.encode('C,SELECT,' + ids))
 
     def startVending(self, amount = 10.0):
         self.ser.write(str.encode('C,START,'+ str(amount) +'\n'))
