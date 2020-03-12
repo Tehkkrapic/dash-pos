@@ -87,9 +87,9 @@ if __name__ == "__main__":
 
     
     #Used for ibeacon
-    parser = Parser(dataQueue = dataQueue)
-    parser.setDaemon(True)
-    parser.start()
+    #parser = Parser(dataQueue = dataQueue)
+    #parser.setDaemon(True)
+    #parser.start()
     
     phl = PiHatListener(dataQueue=dataQueue)
     #DONE
@@ -149,9 +149,9 @@ if __name__ == "__main__":
                 print(tmp, msg['UUID']['uuid'])
                 if tmp == msg['UUID']['uuid'].replace(' ', ''):
                     choice = k
-            ph1.onThread(ph1.startVending())
+            ph1.onThread(ph1.startVending)
             time.sleep(1)
-            ph1.onThread(ph1.selectBeverage(choice))
+            ph1.onThread(ph1.selectBeverage, choice)
         '''
         
                 
@@ -176,7 +176,9 @@ if __name__ == "__main__":
             info('CHOICE->' + str(choice))
             info('ADDRESS-> ' + vend.current_address)
             info('DASH AMOUNT' + str(dash_amount))
-
+                
+            #Ibeacon
+            #c.sendMessage('paymentScreen-' + current_address + '-' + str(amount) + '-' + choice)
             c.sendMessage('paymentScreen-' + vend.current_address + '-' + str(dash_amount))
             start_time = time.time()
             waiting_transaction = True
@@ -193,10 +195,13 @@ if __name__ == "__main__":
                             start_time = 0
                             waiting_transaction = False
                             c.sendMessage('finalScreen')
+                            
                             if retVal == 'over':
                                 c.sendMessage('overpaid')
                             post_api(choice, amount, dash_amount)
                             time.sleep(30)
+                            #parser.empty = True
+                            
                         elif retVal == 'under':
                             #DONE manji iznos
                             c.sendMessage('refund')
