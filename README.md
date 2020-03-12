@@ -1,12 +1,12 @@
 # Proof of concept for adding ibeacon technology to the system
-Proof of concept for using ibeacon technology and proximity to choose a drink and trigger the sale. Due to not having access to the machine, the whole project was simulated on a linux virtual machine. The original forked project has been changed to an aproximation of what the future system with the implemented technology would look like. Certain parts have not been implemented and it needs future testing.
+Proof of concept for using ibeacon technology and proximity to choose a drink and trigger the sale. Due to not having access to the machine, the whole project was simulated on a linux virtual machine. The original forked project has been changed to an aproximation of what the future system with the implemented technology will look like. Certain parts have not been implemented and future testing is needed.
 
 ## Requirements
 ### Hardware requirements
 - Bluetooth 4.0 or higher
 
 ## Installation
-To test the scanner run the install_libraries.sh script. It should install everything needed to test the scanner. Depending on the strength of the signal of your beacon and the Tx value that you choose the scanner might behave differently. Adjust the distance at which the sale is triggered accordingly.
+Run the install_libraries.sh script. It should install everything needed to test the scanner. Depending on the strength of the signal of your beacon and the Tx value that you choose the scanner might behave differently. Adjust the distance at which the sale is triggered accordingly.
 
 ## Testing the system
 Run these programs in this order:
