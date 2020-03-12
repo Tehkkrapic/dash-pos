@@ -78,11 +78,17 @@ class GuiVend():
                         self.syncScreen()
                     elif (message[0] == 'idleScreen'):
                         self.idleScreen()
+		    #Main screen for ibeacon
+		    #elif (message[0] == 'mainScreen'):
+                    #    self.mainScreen()
                     elif (message[0] == 'selectBeverageScreen'):
                         self.selectBeverageScreen()
                     elif (message[0] == 'paymentScreen'):
                         self.paymentScreen(message[1], float(message[2]))
-                    elif (message[0] == 'finalScreen'):
+                    #payment screen for ibeacon
+		    #elif (message[0] == 'paymentScreen'):
+                    #    self.paymentScreen(message[1], float(message[2]), message[3])
+		    elif (message[0] == 'finalScreen'):
                         #DONE
                         if self.waitingThread.isAlive():
                             self.waitingThread.cancel()
@@ -114,6 +120,38 @@ class GuiVend():
         return
 
 
+#Main screen for using ibeacons
+'''
+def mainScreen(self):
+       self.clear()
+       self.notificationBar()
+       topMessage = "USE YOUR APP\n TO CHOOSE A DRINK!"
+       topLabel = tk.Label(self.master, text = topMessage,
+                    font =('Verdana', 28, 'bold','italic'),
+                    foreground= DASHCOLOR,
+                    anchor="center")
+       topLabel.config(background=BGCOLOR_WHITE)
+       topLabel.grid(row= 1,column= 0, columnspan= 3, padx= 30, pady= 50)
+
+       buttonWidth = 300
+       buttonHeight = 100
+       img = PIL.Image.open("./gui/images/logo.png")
+       img = img.resize((buttonWidth, buttonHeight), PIL.Image.ANTIALIAS)
+       photoDashLogo =  PIL.ImageTk.PhotoImage(img)
+
+       #dashButton = tk.Button(self.master,image=photoDashLogo, command=self.startVend,
+       #                width=420, height=200, highlightbackground=DASHCOLOR,
+       #                activebackground="#e9edf5", highlightcolor=DASHCOLOR,
+       #                highlightthickness=3, bd=0, relief= "raised")
+
+       #dashButton.config(background= BGCOLOR_WHITE)
+       #dashButton.image = photoDashLogo
+       #dashButton.grid(row= 2, column= 0, columnspan= 3, padx= 30, pady= 50)
+
+       self.defaultFooter().grid(row=3, column= 0, columnspan= 3, sticky="nsew")
+
+       return
+'''
     def idleScreen(self):
        self.clear()
        self.notificationBar()
@@ -169,6 +207,57 @@ class GuiVend():
 
          self.defaultFooter().grid(row= 3, column= 0, columnspan= 3, sticky="nsew")
          return
+
+#Payment screen for ibeacon
+'''
+def paymentScreen(self, address, amount, drink):
+        self.clear()
+        self.notificationBar()
+        self.notification(drink.upper())
+        topLabel = tk.Label(self.master, text = "SEND\n" + str(amount) +" DASH",
+                          font =('Verdana', 30, 'bold','italic'),
+                          foreground= DASHCOLOR,
+                          anchor="center")
+        topLabel.config(background=BGCOLOR_WHITE)
+        topLabel.grid(row= 1, column= 0, columnspan= 3)
+
+
+        code = pyqrcode.create('dash:'+address+'?amount='+str(amount)+'&label=DLT&IS=1')
+        codeXBM = code.xbm(scale=8)
+        codeBMP = tk.BitmapImage(data=codeXBM)
+        codeBMP.config(background=BGCOLOR_WHITE)
+
+        qrCode = tk.Label(self.master,image=codeBMP, relief="flat")
+        qrCode.image = codeBMP
+        qrCode.grid(row= 2, column= 0, columnspan= 3)
+
+        instructionLabel = tk.Label(self.master, text = "Scan QR code for\n payment".upper(),
+                          font =('Verdana', 22, 'bold','italic'),
+                          foreground= DASHCOLOR,
+                          anchor="center")
+        instructionLabel.config(background=BGCOLOR_WHITE)
+        instructionLabel.grid(row= 3, column= 0, columnspan= 3)
+
+
+        waitingTime = 45
+        self.paymentTimeVar.set(waitingTime)
+        self.master.after(1000, self.paymentScreenTimer, waitingTime-1)
+        timer = tk.Label(self.master, textvariable = self.paymentTimeVar,
+                          font =('Verdana', 30, 'bold','italic'),
+                          foreground= "red",
+                              anchor="center")
+        timer.config(background=BGCOLOR_WHITE)
+
+        timer.grid(row=4, column=0, rowspan=1, columnspan=3, padx= 30, pady= 10)
+
+        #DONE dretva
+        self.waitingThread = Timer(waitingTime+1, lambda: self.waitingScreen())
+        self.waitingThread.setDaemon(True)
+        self.waitingThread.start()
+
+        return
+'''
+
 
     def paymentScreen(self, address, amount):
         self.clear()
