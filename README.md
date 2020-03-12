@@ -1,12 +1,14 @@
-# Proof of concept for using proximity
-Proof of concept for using Ibeacon technology and proximity to choose a drink and trigger the sale. Due to not having access to the machine, the whole project was simulated on a linux virtual machine. The original forked project has been changed to an aproximation of what the future system with the implemented technology would look like. Certain parts have not been implemented and tested.
+# Proof of concept for adding ibeacon technology to the system
+Proof of concept for using ibeacon technology and proximity to choose a drink and trigger the sale. Due to not having access to the machine, the whole project was simulated on a linux virtual machine. The original forked project has been changed to an aproximation of what the future system with the implemented technology would look like. Certain parts have not been implemented and it needs future testing.
 
 ## Requirements
 ### Hardware requirements
 - Bluetooth 4.0 or higher
 
 ## Installation
-To test the scanner run the install_libraries.sh script. It should install everything needed to test the scanner. Depending on the strength of the signal of your beacon and the Tx value that you choose the scanner might behave differently. Adjust the distance at which the sale is triggered.
+To test the scanner run the install_libraries.sh script. It should install everything needed to test the scanner. Depending on the strength of the signal of your beacon and the Tx value that you choose the scanner might behave differently. Adjust the distance at which the sale is triggered accordingly.
+
+----------------------------------------------------------------------------------------------------------------------------------------
 
 # Dash point of sale embedded system
 Point of sale embedded system based on Dash cryptocurrency. The whole project was done on a Raspberry Pi 3 model B+ with the original 7" touch screen running Raspbian Stretch OS. Based on moocowmoo's [dashvend](https://github.com/moocowmoo/dashvend) project
