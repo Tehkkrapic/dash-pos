@@ -23,6 +23,10 @@ from vending.pihatlistener import PiHatListener
 from gui.client import Client
 from gui.guilistener import GuiListener
 from bitcoinrpc.authproxy import JSONRPCException
+#Used for ibeacon
+from dashvend.config import DRINK_UUIDS
+from parser import Parser
+
 
 start_time = 0
 
@@ -81,6 +85,12 @@ if __name__ == "__main__":
     vend.set_address_chain(rpcaddress)  # attach address
     vend.set_dashrpc(dashrpc)  # attach local wallet for refunds
 
+    
+    #Used for ibeacon
+    parser = Parser(dataQueue = dataQueue)
+    parser.setDaemon(True)
+    parser.start()
+    
     phl = PiHatListener(dataQueue=dataQueue)
     #DONE
     phl.setDaemon(True)
@@ -123,11 +133,28 @@ if __name__ == "__main__":
 
         if 'subscribed' in msg.keys():
             if msg['subscribed'] == True:
+                #For ibeacon swith the message
+                #c.sendMessage('mainScreen')
                 c.sendMessage('idleScreen')
                 info("*" * 80)
                 info(" --> ready. listening to dash %s network." % (MAINNET and 'mainnet' or 'testnet'))
                 phl.subscribed = True
 
+        #Used for ibeacon
+        '''
+        if 'UUID' in msg.keys() and parser.empty == False:
+            choice = None
+            for k,v in DRINK_UUIDS.items():
+                tmp = v.replace('-', '').upper()
+                print(tmp, msg['UUID']['uuid'])
+                if tmp == msg['UUID']['uuid'].replace(' ', ''):
+                    choice = k
+            ph1.onThread(ph1.startVending())
+            time.sleep(1)
+            ph1.onThread(ph1.selectBeverage(choice))
+        '''
+        
+                
         if 'gui' in msg.keys():
             if phl.subscribed and msg['gui'] == 'startVend':
                 phl.onThread(phl.startVending)
